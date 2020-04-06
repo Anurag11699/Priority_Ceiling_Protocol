@@ -46,6 +46,7 @@ extern job_list* initialize_job_list(task_set *,resource_list *,int);
 extern void scheduler_priority_ceiling(kernel*,task_set *,resource_list*,int);
 extern void update_priority_ceiling(kernel*,job_list*, resource_list*);
 extern void print_job_list(job_list*);
+extern void print_priority_ceilings(kernel*,resource_list*);
 
 
 #endif /*FUNCTIONS_H*/

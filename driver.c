@@ -27,7 +27,7 @@ int main()
         fscanf(resource_fd,"%d",&(R->total_instances));
         R->remaining_instances=R->total_instances;
         R->resource_number=i;
-        R->priority_ceil_of_resource=-1;
+        R->priority_ceil_of_resource=__INT16_MAX__;
         R->currently_used_by = new_red_black_tree();
         resource_list_object->resource_list_head[i]=R;
 
@@ -64,7 +64,7 @@ int main()
 
 
     kernel* kernel_object = (kernel*)malloc(sizeof(kernel));
-    kernel_object->system_priority_ceiling=-1;
+    kernel_object->system_priority_ceiling=__INT16_MAX__;
 
     //call the scheduler implementing priority inheritance protcol
 

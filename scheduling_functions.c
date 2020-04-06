@@ -110,6 +110,7 @@ job_list* initialize_job_list(task_set *task_set_object,resource_list *resource_
             int num_resources = (rand() % (resource_list_object->number_of_resources + 1));
             
             
+            
             //fprintf(output_fd,"Number of Resources: %d\n",num_resources);
 
             req_resource_info_object->number_of_resources=num_resources;
@@ -195,10 +196,12 @@ void update_priority_ceiling(kernel* kernel_object,job_list* job_list_object, re
     int max_job_priority_needing_resource[resource_list_object->number_of_resources];
     int i,j;
 
+    kernel_object->system_priority_ceiling=__INT16_MAX__;
+
     for(i=0;i<resource_list_object->number_of_resources;i++)
     {
-        resource_instances_currently_needed[i]=0;
-        max_job_priority_needing_resource[i]=0;
+        resource_instances_currently_needed[i]=__INT16_MAX__;
+        max_job_priority_needing_resource[i]=__INT16_MAX__;
     }
 
     for(i=0;i<job_list_object->number_of_jobs;i++)
@@ -212,11 +215,11 @@ void update_priority_ceiling(kernel* kernel_object,job_list* job_list_object, re
             {
                 resource_usage* resource_usage_object = job_object->resources_needed->list_head[j];
 
-                if(resource_usage_object->is_usage_over==0)
+                if(resource_usage_object->is_usage_over==0 || 1)
                 {
                     resource_instances_currently_needed[resource_usage_object->resource_name->resource_number] = resource_instances_currently_needed[resource_usage_object->resource_name->resource_number]+ resource_usage_object->instances_needed;
 
-                    max_job_priority_needing_resource[resource_usage_object->resource_name->resource_number] = max(max_job_priority_needing_resource[resource_usage_object->resource_name->resource_number], job_object->assigned_priority);
+                    max_job_priority_needing_resource[resource_usage_object->resource_name->resource_number] = min(max_job_priority_needing_resource[resource_usage_object->resource_name->resource_number], job_object->assigned_priority);
                 }
                 
             }
@@ -231,13 +234,28 @@ void update_priority_ceiling(kernel* kernel_object,job_list* job_list_object, re
             resource_list_object->resource_list_head[i]->priority_ceil_of_resource = max_job_priority_needing_resource[i];
         }
 
-        kernel_object->system_priority_ceiling = max(kernel_object->system_priority_ceiling,resource_list_object->resource_list_head[i]->priority_ceil_of_resource);
+        kernel_object->system_priority_ceiling = min(kernel_object->system_priority_ceiling,resource_list_object->resource_list_head[i]->priority_ceil_of_resource);
     }
 
+}
+
+void print_priority_ceilings(kernel* kernel_object,resource_list* resource_list_object)
+{   
+    int i;
 
     //printing the ceilings
+    fprintf(output_fd,"Resource Wise Priority Ceilings\n");
+    fflush(output_fd);
 
+    for(i=0;i<resource_list_object->number_of_resources;i++)
+    {
+       fprintf(output_fd,"Resouce %d: %d\n",i,resource_list_object->resource_list_head[i]->priority_ceil_of_resource);
+       fflush(output_fd);
+    }
+    fprintf(output_fd,"\n");
 
+    fprintf(output_fd,"System Priority Ceiling: %d\n",kernel_object->system_priority_ceiling);
+    fflush(output_fd);
 }
 
 
@@ -324,12 +342,12 @@ void scheduler_priority_ceiling(kernel* kernel_object,task_set *priority_inherit
     fprintf(output_fd,"PRINTING THE SCHEDULE\n\n");
     fflush(output_fd);
 
-    
+    print_priority_ceilings(kernel_object,resource_list_object);
 
     while(decision_point_time<=priority_inheritance_task_set_hyperperiod)
     {
-        // fprintf(output_fd,"\n\nCurrent Time: %d\n",decision_point_time);
-        // fflush(output_fd);
+        fprintf(output_fd,"\n\nCurrent Time: %d\n",decision_point_time);
+        fflush(output_fd);
 
         //every loop iteration is a decision point
         number_of_decision_points++;
@@ -352,8 +370,8 @@ void scheduler_priority_ceiling(kernel* kernel_object,task_set *priority_inherit
                 {
                     current_executing_job->resources_needed->list_head[i]->remaining_time_needed = max(0,current_executing_job->resources_needed->list_head[i]->remaining_time_needed-time_lapse);
 
-                    // fprintf(output_fd,"Job J{%d,%d} | Resource R%d | Time Left %d\n",current_executing_job->task_number,current_executing_job->job_number,current_executing_job->resources_needed->list_head[i]->resource_name->resource_number,current_executing_job->resources_needed->list_head[i]->remaining_time_needed);
-                    // fflush(output_fd);
+                    fprintf(output_fd,"Job J{%d,%d} | Resource R%d | Time Left %d\n",current_executing_job->task_number,current_executing_job->job_number,current_executing_job->resources_needed->list_head[i]->resource_name->resource_number,current_executing_job->resources_needed->list_head[i]->remaining_time_needed);
+                    fflush(output_fd);
 
                     if(current_executing_job->resources_needed->list_head[i]->remaining_time_needed==0)
                     {
@@ -377,9 +395,12 @@ void scheduler_priority_ceiling(kernel* kernel_object,task_set *priority_inherit
                         //update the priority ceilings after freeing this resource
                         update_priority_ceiling(kernel_object,job_list_object,resource_list_object);
 
+                        print_priority_ceilings(kernel_object,resource_list_object);
 
-                        // fprintf(output_fd,"Job J{%d,%d} Done with | Resource R%d | Time Left %d\n",current_executing_job->task_number,current_executing_job->job_number,current_executing_job->resources_needed->list_head[i]->resource_name->resource_number,current_executing_job->resources_needed->list_head[i]->remaining_time_needed);
-                        // fflush(output_fd);
+
+
+                        fprintf(output_fd,"Job J{%d,%d} Done with | Resource R%d | Time Left %d\n",current_executing_job->task_number,current_executing_job->job_number,current_executing_job->resources_needed->list_head[i]->resource_name->resource_number,current_executing_job->resources_needed->list_head[i]->remaining_time_needed);
+                        fflush(output_fd);
 
 
                     }
@@ -397,8 +418,8 @@ void scheduler_priority_ceiling(kernel* kernel_object,task_set *priority_inherit
 
             if(current_executing_job->remaining_execution_time==0)
             {
-                // fprintf(output_fd,"J{%d,%d} Finished Execution\n",current_executing_job->task_number,current_executing_job->job_number);
-                // fflush(output_fd);
+                fprintf(output_fd,"J{%d,%d} Finished Execution\n",current_executing_job->task_number,current_executing_job->job_number);
+                fflush(output_fd);
 
                 if(decision_point_time>current_executing_job->absolute_deadline)
                 {
@@ -418,7 +439,7 @@ void scheduler_priority_ceiling(kernel* kernel_object,task_set *priority_inherit
                 //set state to terminated
                 current_executing_job->state=NOT_IN_SYSTEM;
 
-                free(current_executing_job);
+                //free(current_executing_job);
 
                 current_executing_job=NULL;
             }
@@ -454,8 +475,8 @@ void scheduler_priority_ceiling(kernel* kernel_object,task_set *priority_inherit
             insert(ready_queue,job_list_object->job_list_head[job_num]);
             
 
-            // fprintf(output_fd,"Insert J{%d,%d} in Ready Queue\n",job_list_object->job_list_head[job_num]->task_number,job_list_object->job_list_head[job_num]->job_number);
-            // fflush(output_fd);
+            fprintf(output_fd,"Insert J{%d,%d} with priority %d in Ready Queue\n",job_list_object->job_list_head[job_num]->task_number,job_list_object->job_list_head[job_num]->job_number,job_list_object->job_list_head[job_num]->current_priority);
+            fflush(output_fd);
             job_num++;
         }
 
@@ -481,6 +502,8 @@ void scheduler_priority_ceiling(kernel* kernel_object,task_set *priority_inherit
 
             //write function to update priority ceilings of resources and the system
             update_priority_ceiling(kernel_object,job_list_object,resource_list_object);
+            print_priority_ceilings(kernel_object,resource_list_object);
+
 
 
             job* new_job = RB_tree_remove_min(ready_queue);
@@ -504,8 +527,8 @@ void scheduler_priority_ceiling(kernel* kernel_object,task_set *priority_inherit
             continue;
         }
         
-        // fprintf(output_fd,"Currently Executing J{%d,%d}\n",current_executing_job->task_number,current_executing_job->job_number);
-        // fflush(output_fd);
+        fprintf(output_fd,"Currently Executing J{%d,%d}\n",current_executing_job->task_number,current_executing_job->job_number);
+        fflush(output_fd);
 
         fprintf(output_fd,"\nTime: %d | Currently Executing Job: J{%d,%d}\n\n",decision_point_time,current_executing_job->task_number,current_executing_job->job_number);
         fflush(output_fd);
@@ -557,8 +580,8 @@ void scheduler_priority_ceiling(kernel* kernel_object,task_set *priority_inherit
                     //update the priority ceilings after allocating this resource
                     update_priority_ceiling(kernel_object,job_list_object,resource_list_object);
 
-                    // fprintf(output_fd,"Resource R%d given to J{%d,%d}\n",req_resource_usage->resource_name->resource_number,current_executing_job->task_number,current_executing_job->job_number);
-                    // fflush(output_fd);
+                    fprintf(output_fd,"Resource R%d given to J{%d,%d}\n",req_resource_usage->resource_name->resource_number,current_executing_job->task_number,current_executing_job->job_number);
+                    fflush(output_fd);
                     
                     
                 }
@@ -566,14 +589,14 @@ void scheduler_priority_ceiling(kernel* kernel_object,task_set *priority_inherit
                 {
     
 
-                    // fprintf(output_fd,"IN INHERTIANCE\n");
-                    // fflush(output_fd);
+                    fprintf(output_fd,"IN INHERTIANCE\n");
+                    fflush(output_fd);
                     
                     //job of the current highest priority which owns this resource
                     job* job_to_inherit_priority = RB_tree_get_min(req_resource_usage->resource_name->currently_used_by);
 
-                    // fprintf(output_fd,"J{%d,%d} with Priority %d blocked by J{%d,%d} with Priority %d\n",current_executing_job->task_number,current_executing_job->job_number,current_executing_job->current_priority,job_to_inherit_priority->task_number,job_to_inherit_priority->job_number,job_to_inherit_priority->current_priority);
-                    // fflush(output_fd);
+                    fprintf(output_fd,"J{%d,%d} with Priority %d blocked by J{%d,%d} with Priority %d\n",current_executing_job->task_number,current_executing_job->job_number,current_executing_job->current_priority,job_to_inherit_priority->task_number,job_to_inherit_priority->job_number,job_to_inherit_priority->current_priority);
+                    fflush(output_fd);
 
                     //inorder(req_resource_usage->resource_name->currently_used_by, req_resource_usage->resource_name->currently_used_by->root);
 
@@ -581,10 +604,13 @@ void scheduler_priority_ceiling(kernel* kernel_object,task_set *priority_inherit
                    
                     update_job_priority(ready_queue,resource_list_object,job_to_inherit_priority,current_executing_job->current_priority);
 
+                    print_priority_ceilings(kernel_object,resource_list_object);
+
+
                     //inorder(req_resource_usage->resource_name->currently_used_by, req_resource_usage->resource_name->currently_used_by->root);
 
-                    // fprintf(output_fd,"After Priority Inheritance J{%d,%d} has Priority %d\n",job_to_inherit_priority->task_number,job_to_inherit_priority->job_number,job_to_inherit_priority->current_priority);
-                    // fflush(output_fd);
+                    fprintf(output_fd,"After Priority Inheritance J{%d,%d} has Priority %d\n",job_to_inherit_priority->task_number,job_to_inherit_priority->job_number,job_to_inherit_priority->current_priority);
+                    fflush(output_fd);
 
 
                     //currently executing job is blocked
@@ -593,8 +619,8 @@ void scheduler_priority_ceiling(kernel* kernel_object,task_set *priority_inherit
 
                     current_executing_job = new_currently_executing_job;
 
-                    // fprintf(output_fd,"After Priority Inheritance, currently executing job is J{%d,%d} with Priority %d\n",current_executing_job->task_number,current_executing_job->job_number,current_executing_job->current_priority);
-                    // fflush(output_fd);
+                    fprintf(output_fd,"After Priority Inheritance, currently executing job is J{%d,%d} with Priority %d\n",current_executing_job->task_number,current_executing_job->job_number,current_executing_job->current_priority);
+                    fflush(output_fd);
 
                     number_of_preemptions++;
 
@@ -621,8 +647,8 @@ void scheduler_priority_ceiling(kernel* kernel_object,task_set *priority_inherit
                     continue;
                 }
 
-                // fprintf(output_fd,"Next Resource Request is for R%d at Time %d\n",current_executing_job->resources_needed->list_head[i]->resource_name->resource_number,time_when_requested);
-                // fflush(output_fd);
+                fprintf(output_fd,"Next Resource Request is for R%d at Time %d\n",current_executing_job->resources_needed->list_head[i]->resource_name->resource_number,time_when_requested);
+                fflush(output_fd);
 
                 next_resource_request_time = min(next_resource_request_time,time_when_requested);
 
@@ -640,8 +666,8 @@ void scheduler_priority_ceiling(kernel* kernel_object,task_set *priority_inherit
                 int time_when_released =  decision_point_time + current_executing_job->resources_needed->list_head[i]->remaining_time_needed;
 
 
-                // fprintf(output_fd,"Next Resource Release is for R%d at Time %d\n",current_executing_job->resources_needed->list_head[i]->resource_name->resource_number,time_when_released);
-                // fflush(output_fd);
+                fprintf(output_fd,"Next Resource Release is for R%d at Time %d\n",current_executing_job->resources_needed->list_head[i]->resource_name->resource_number,time_when_released);
+                fflush(output_fd);
                 
                 next_resource_release_time = min(next_resource_request_time,time_when_released);
 
@@ -654,9 +680,9 @@ void scheduler_priority_ceiling(kernel* kernel_object,task_set *priority_inherit
 
         current_job_departure_time = current_executing_job->remaining_execution_time + decision_point_time;
 
-        // fprintf(output_fd,"Current Job  Departure Time %d\n",current_job_departure_time);
-        // fprintf(output_fd,"New Job Arrival Time %d\n",new_job_arrival_time);
-        // fflush(output_fd);
+        fprintf(output_fd,"Current Job  Departure Time %d\n",current_job_departure_time);
+        fprintf(output_fd,"New Job Arrival Time %d\n",new_job_arrival_time);
+        fflush(output_fd);
 
         int next_decision_point_time = min(min(current_job_departure_time,new_job_arrival_time),min(next_resource_release_time,next_resource_request_time));
 

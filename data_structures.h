@@ -124,6 +124,7 @@ struct job{
     int absolute_deadline;
     int task_number;
     int job_number;
+    int state;
 
     //this has all the resource usage information
     req_resource_info* resources_needed;

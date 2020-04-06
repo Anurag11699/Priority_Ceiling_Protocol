@@ -1,0 +1,451 @@
+Hyperperiod of the task set for priority inheritance is: 60
+JOB LIST SPECIFICATIONS
+
+J{0,0} | Arrival Time: 0 | Execution Time: 1
+Resources Needed By Job
+Resource Name: 5 | Instances Needed: 1 | Start Time: 0 | Time Neeeded For: 1
+Resource Name: 3 | Instances Needed: 1 | Start Time: 0 | Time Neeeded For: 1
+Resource Name: 4 | Instances Needed: 1 | Start Time: 0 | Time Neeeded For: 1
+
+
+J{1,0} | Arrival Time: 0 | Execution Time: 2
+Resources Needed By Job
+Resource Name: 3 | Instances Needed: 1 | Start Time: 0 | Time Neeeded For: 1
+Resource Name: 5 | Instances Needed: 1 | Start Time: 0 | Time Neeeded For: 1
+Resource Name: 1 | Instances Needed: 1 | Start Time: 0 | Time Neeeded For: 2
+Resource Name: 4 | Instances Needed: 1 | Start Time: 0 | Time Neeeded For: 2
+Resource Name: 2 | Instances Needed: 2 | Start Time: 0 | Time Neeeded For: 2
+
+
+J{2,0} | Arrival Time: 0 | Execution Time: 1
+Resources Needed By Job
+Resource Name: 2 | Instances Needed: 2 | Start Time: 0 | Time Neeeded For: 1
+Resource Name: 4 | Instances Needed: 2 | Start Time: 0 | Time Neeeded For: 1
+Resource Name: 1 | Instances Needed: 1 | Start Time: 0 | Time Neeeded For: 1
+Resource Name: 3 | Instances Needed: 1 | Start Time: 0 | Time Neeeded For: 1
+Resource Name: 5 | Instances Needed: 1 | Start Time: 0 | Time Neeeded For: 1
+Resource Name: 0 | Instances Needed: 3 | Start Time: 0 | Time Neeeded For: 1
+
+
+J{3,0} | Arrival Time: 0 | Execution Time: 4
+Resources Needed By Job
+
+
+J{0,1} | Arrival Time: 4 | Execution Time: 1
+Resources Needed By Job
+Resource Name: 2 | Instances Needed: 1 | Start Time: 0 | Time Neeeded For: 1
+Resource Name: 4 | Instances Needed: 1 | Start Time: 0 | Time Neeeded For: 1
+Resource Name: 0 | Instances Needed: 2 | Start Time: 0 | Time Neeeded For: 1
+
+
+J{1,1} | Arrival Time: 5 | Execution Time: 2
+Resources Needed By Job
+Resource Name: 1 | Instances Needed: 1 | Start Time: 0 | Time Neeeded For: 2
+Resource Name: 3 | Instances Needed: 1 | Start Time: 0 | Time Neeeded For: 1
+Resource Name: 0 | Instances Needed: 3 | Start Time: 1 | Time Neeeded For: 1
+
+
+J{0,2} | Arrival Time: 8 | Execution Time: 1
+Resources Needed By Job
+Resource Name: 3 | Instances Needed: 1 | Start Time: 0 | Time Neeeded For: 1
+Resource Name: 5 | Instances Needed: 1 | Start Time: 0 | Time Neeeded For: 1
+Resource Name: 1 | Instances Needed: 1 | Start Time: 0 | Time Neeeded For: 1
+
+
+J{1,2} | Arrival Time: 10 | Execution Time: 2
+Resources Needed By Job
+Resource Name: 5 | Instances Needed: 1 | Start Time: 1 | Time Neeeded For: 1
+Resource Name: 2 | Instances Needed: 1 | Start Time: 1 | Time Neeeded For: 1
+
+
+J{2,1} | Arrival Time: 10 | Execution Time: 1
+Resources Needed By Job
+Resource Name: 1 | Instances Needed: 1 | Start Time: 0 | Time Neeeded For: 1
+Resource Name: 2 | Instances Needed: 1 | Start Time: 0 | Time Neeeded For: 1
+Resource Name: 4 | Instances Needed: 2 | Start Time: 0 | Time Neeeded For: 1
+Resource Name: 3 | Instances Needed: 1 | Start Time: 0 | Time Neeeded For: 1
+
+
+J{0,3} | Arrival Time: 12 | Execution Time: 1
+Resources Needed By Job
+Resource Name: 3 | Instances Needed: 1 | Start Time: 0 | Time Neeeded For: 1
+Resource Name: 1 | Instances Needed: 1 | Start Time: 0 | Time Neeeded For: 1
+Resource Name: 2 | Instances Needed: 1 | Start Time: 0 | Time Neeeded For: 1
+Resource Name: 4 | Instances Needed: 1 | Start Time: 0 | Time Neeeded For: 1
+Resource Name: 0 | Instances Needed: 1 | Start Time: 0 | Time Neeeded For: 1
+Resource Name: 5 | Instances Needed: 1 | Start Time: 0 | Time Neeeded For: 1
+
+
+J{1,3} | Arrival Time: 15 | Execution Time: 2
+Resources Needed By Job
+
+
+J{3,1} | Arrival Time: 15 | Execution Time: 4
+Resources Needed By Job
+Resource Name: 1 | Instances Needed: 1 | Start Time: 2 | Time Neeeded For: 1
+
+
+J{0,4} | Arrival Time: 16 | Execution Time: 1
+Resources Needed By Job
+
+
+J{0,5} | Arrival Time: 20 | Execution Time: 1
+Resources Needed By Job
+Resource Name: 0 | Instances Needed: 3 | Start Time: 0 | Time Neeeded For: 1
+Resource Name: 5 | Instances Needed: 1 | Start Time: 0 | Time Neeeded For: 1
+Resource Name: 4 | Instances Needed: 1 | Start Time: 0 | Time Neeeded For: 1
+Resource Name: 1 | Instances Needed: 1 | Start Time: 0 | Time Neeeded For: 1
+
+
+J{1,4} | Arrival Time: 20 | Execution Time: 2
+Resources Needed By Job
+Resource Name: 2 | Instances Needed: 1 | Start Time: 1 | Time Neeeded For: 1
+Resource Name: 4 | Instances Needed: 1 | Start Time: 0 | Time Neeeded For: 1
+
+
+J{2,2} | Arrival Time: 20 | Execution Time: 1
+Resources Needed By Job
+Resource Name: 2 | Instances Needed: 2 | Start Time: 0 | Time Neeeded For: 1
+Resource Name: 4 | Instances Needed: 3 | Start Time: 0 | Time Neeeded For: 1
+Resource Name: 5 | Instances Needed: 1 | Start Time: 0 | Time Neeeded For: 1
+
+
+J{0,6} | Arrival Time: 24 | Execution Time: 1
+Resources Needed By Job
+Resource Name: 2 | Instances Needed: 1 | Start Time: 0 | Time Neeeded For: 1
+Resource Name: 1 | Instances Needed: 1 | Start Time: 0 | Time Neeeded For: 1
+Resource Name: 3 | Instances Needed: 1 | Start Time: 0 | Time Neeeded For: 1
+
+
+J{1,5} | Arrival Time: 25 | Execution Time: 2
+Resources Needed By Job
+Resource Name: 4 | Instances Needed: 3 | Start Time: 1 | Time Neeeded For: 1
+
+
+J{0,7} | Arrival Time: 28 | Execution Time: 1
+Resources Needed By Job
+Resource Name: 5 | Instances Needed: 1 | Start Time: 0 | Time Neeeded For: 1
+Resource Name: 0 | Instances Needed: 4 | Start Time: 0 | Time Neeeded For: 1
+Resource Name: 4 | Instances Needed: 3 | Start Time: 0 | Time Neeeded For: 1
+Resource Name: 3 | Instances Needed: 1 | Start Time: 0 | Time Neeeded For: 1
+Resource Name: 2 | Instances Needed: 2 | Start Time: 0 | Time Neeeded For: 1
+
+
+J{1,6} | Arrival Time: 30 | Execution Time: 2
+Resources Needed By Job
+Resource Name: 3 | Instances Needed: 1 | Start Time: 0 | Time Neeeded For: 1
+Resource Name: 4 | Instances Needed: 3 | Start Time: 1 | Time Neeeded For: 1
+Resource Name: 5 | Instances Needed: 1 | Start Time: 1 | Time Neeeded For: 1
+Resource Name: 1 | Instances Needed: 1 | Start Time: 0 | Time Neeeded For: 2
+Resource Name: 2 | Instances Needed: 2 | Start Time: 1 | Time Neeeded For: 1
+
+
+J{2,3} | Arrival Time: 30 | Execution Time: 1
+Resources Needed By Job
+Resource Name: 0 | Instances Needed: 4 | Start Time: 0 | Time Neeeded For: 1
+
+
+J{3,2} | Arrival Time: 30 | Execution Time: 4
+Resources Needed By Job
+Resource Name: 1 | Instances Needed: 1 | Start Time: 0 | Time Neeeded For: 4
+
+
+J{0,8} | Arrival Time: 32 | Execution Time: 1
+Resources Needed By Job
+Resource Name: 0 | Instances Needed: 3 | Start Time: 0 | Time Neeeded For: 1
+Resource Name: 1 | Instances Needed: 1 | Start Time: 0 | Time Neeeded For: 1
+Resource Name: 4 | Instances Needed: 3 | Start Time: 0 | Time Neeeded For: 1
+Resource Name: 3 | Instances Needed: 1 | Start Time: 0 | Time Neeeded For: 1
+Resource Name: 2 | Instances Needed: 2 | Start Time: 0 | Time Neeeded For: 1
+Resource Name: 5 | Instances Needed: 1 | Start Time: 0 | Time Neeeded For: 1
+
+
+J{1,7} | Arrival Time: 35 | Execution Time: 2
+Resources Needed By Job
+Resource Name: 3 | Instances Needed: 1 | Start Time: 0 | Time Neeeded For: 2
+Resource Name: 2 | Instances Needed: 1 | Start Time: 1 | Time Neeeded For: 1
+Resource Name: 5 | Instances Needed: 1 | Start Time: 0 | Time Neeeded For: 2
+
+
+J{0,9} | Arrival Time: 36 | Execution Time: 1
+Resources Needed By Job
+Resource Name: 0 | Instances Needed: 4 | Start Time: 0 | Time Neeeded For: 1
+Resource Name: 5 | Instances Needed: 1 | Start Time: 0 | Time Neeeded For: 1
+Resource Name: 3 | Instances Needed: 1 | Start Time: 0 | Time Neeeded For: 1
+Resource Name: 1 | Instances Needed: 1 | Start Time: 0 | Time Neeeded For: 1
+Resource Name: 2 | Instances Needed: 1 | Start Time: 0 | Time Neeeded For: 1
+Resource Name: 4 | Instances Needed: 2 | Start Time: 0 | Time Neeeded For: 1
+
+
+J{0,10} | Arrival Time: 40 | Execution Time: 1
+Resources Needed By Job
+
+
+J{1,8} | Arrival Time: 40 | Execution Time: 2
+Resources Needed By Job
+Resource Name: 0 | Instances Needed: 2 | Start Time: 0 | Time Neeeded For: 1
+Resource Name: 4 | Instances Needed: 3 | Start Time: 0 | Time Neeeded For: 1
+Resource Name: 2 | Instances Needed: 2 | Start Time: 0 | Time Neeeded For: 1
+
+
+J{2,4} | Arrival Time: 40 | Execution Time: 1
+Resources Needed By Job
+Resource Name: 3 | Instances Needed: 1 | Start Time: 0 | Time Neeeded For: 1
+Resource Name: 0 | Instances Needed: 4 | Start Time: 0 | Time Neeeded For: 1
+
+
+J{0,11} | Arrival Time: 44 | Execution Time: 1
+Resources Needed By Job
+Resource Name: 3 | Instances Needed: 1 | Start Time: 0 | Time Neeeded For: 1
+
+
+J{1,9} | Arrival Time: 45 | Execution Time: 2
+Resources Needed By Job
+Resource Name: 5 | Instances Needed: 1 | Start Time: 1 | Time Neeeded For: 1
+Resource Name: 3 | Instances Needed: 1 | Start Time: 0 | Time Neeeded For: 1
+Resource Name: 1 | Instances Needed: 1 | Start Time: 1 | Time Neeeded For: 1
+Resource Name: 2 | Instances Needed: 1 | Start Time: 0 | Time Neeeded For: 2
+Resource Name: 4 | Instances Needed: 1 | Start Time: 0 | Time Neeeded For: 2
+
+
+J{3,3} | Arrival Time: 45 | Execution Time: 4
+Resources Needed By Job
+Resource Name: 3 | Instances Needed: 1 | Start Time: 1 | Time Neeeded For: 3
+Resource Name: 4 | Instances Needed: 3 | Start Time: 2 | Time Neeeded For: 1
+Resource Name: 2 | Instances Needed: 1 | Start Time: 3 | Time Neeeded For: 1
+Resource Name: 5 | Instances Needed: 1 | Start Time: 3 | Time Neeeded For: 1
+Resource Name: 0 | Instances Needed: 4 | Start Time: 2 | Time Neeeded For: 1
+Resource Name: 1 | Instances Needed: 1 | Start Time: 2 | Time Neeeded For: 1
+
+
+J{0,12} | Arrival Time: 48 | Execution Time: 1
+Resources Needed By Job
+
+
+J{1,10} | Arrival Time: 50 | Execution Time: 2
+Resources Needed By Job
+
+
+J{2,5} | Arrival Time: 50 | Execution Time: 1
+Resources Needed By Job
+Resource Name: 1 | Instances Needed: 1 | Start Time: 0 | Time Neeeded For: 1
+Resource Name: 5 | Instances Needed: 1 | Start Time: 0 | Time Neeeded For: 1
+Resource Name: 4 | Instances Needed: 1 | Start Time: 0 | Time Neeeded For: 1
+Resource Name: 2 | Instances Needed: 2 | Start Time: 0 | Time Neeeded For: 1
+Resource Name: 3 | Instances Needed: 1 | Start Time: 0 | Time Neeeded For: 1
+
+
+J{0,13} | Arrival Time: 52 | Execution Time: 1
+Resources Needed By Job
+Resource Name: 3 | Instances Needed: 1 | Start Time: 0 | Time Neeeded For: 1
+Resource Name: 2 | Instances Needed: 1 | Start Time: 0 | Time Neeeded For: 1
+
+
+J{1,11} | Arrival Time: 55 | Execution Time: 2
+Resources Needed By Job
+Resource Name: 0 | Instances Needed: 1 | Start Time: 0 | Time Neeeded For: 2
+Resource Name: 2 | Instances Needed: 2 | Start Time: 0 | Time Neeeded For: 2
+
+
+J{0,14} | Arrival Time: 56 | Execution Time: 1
+Resources Needed By Job
+
+
+PRINTING THE SCHEDULE
+
+
+Time: 0 | Currently Executing Job: J{0,0}
+
+
+Time: 1 | Currently Executing Job: J{1,0}
+
+
+Time: 3 | Currently Executing Job: J{2,0}
+
+
+Time: 4 | Currently Executing Job: J{0,1}
+
+
+Time: 5 | Currently Executing Job: J{1,1}
+
+
+Time: 6 | Currently Executing Job: J{1,1}
+
+
+Time: 7 | Currently Executing Job: J{3,0}
+
+
+Time: 8 | Currently Executing Job: J{0,2}
+
+
+Time: 9 | Currently Executing Job: J{3,0}
+
+
+Time: 10 | Currently Executing Job: J{1,2}
+
+
+Time: 11 | Currently Executing Job: J{1,2}
+
+
+Time: 12 | Currently Executing Job: J{0,3}
+
+
+Time: 13 | Currently Executing Job: J{2,1}
+
+
+Time: 14 | Currently Executing Job: J{3,0}
+
+
+Time: 15 | Currently Executing Job: J{1,3}
+
+
+Time: 16 | Currently Executing Job: J{0,4}
+
+
+Time: 17 | Currently Executing Job: J{1,3}
+
+
+Time: 18 | Currently Executing Job: J{3,1}
+
+
+Time: 20 | Currently Executing Job: J{0,5}
+
+
+Time: 21 | Currently Executing Job: J{1,4}
+
+
+Time: 22 | Currently Executing Job: J{1,4}
+
+
+Time: 23 | Currently Executing Job: J{2,2}
+
+
+Time: 24 | Currently Executing Job: J{0,6}
+
+
+Time: 25 | Currently Executing Job: J{1,5}
+
+
+Time: 26 | Currently Executing Job: J{1,5}
+
+
+Time: 27 | Currently Executing Job: J{3,0}
+
+J{3,0} Missed its Deadline
+
+Time: 28 | Currently Executing Job: J{0,7}
+
+
+Time: 29 | Currently Executing Job: J{3,1}
+
+
+Time: 30 | Currently Executing Job: J{1,6}
+
+
+Time: 31 | Currently Executing Job: J{1,6}
+
+
+Time: 32 | Currently Executing Job: J{0,8}
+
+
+Time: 33 | Currently Executing Job: J{2,3}
+
+
+Time: 34 | Currently Executing Job: J{3,2}
+
+
+Time: 35 | Currently Executing Job: J{1,7}
+
+
+Time: 36 | Currently Executing Job: J{0,9}
+
+
+Time: 37 | Currently Executing Job: J{1,7}
+
+
+Time: 38 | Currently Executing Job: J{3,1}
+
+J{3,1} Missed its Deadline
+
+Time: 39 | Currently Executing Job: J{3,2}
+
+
+Time: 40 | Currently Executing Job: J{0,10}
+
+
+Time: 41 | Currently Executing Job: J{1,8}
+
+
+Time: 42 | Currently Executing Job: J{1,8}
+
+
+Time: 43 | Currently Executing Job: J{2,4}
+
+
+Time: 44 | Currently Executing Job: J{0,11}
+
+
+Time: 45 | Currently Executing Job: J{1,9}
+
+
+Time: 46 | Currently Executing Job: J{1,9}
+
+
+Time: 47 | Currently Executing Job: J{3,2}
+
+
+Time: 48 | Currently Executing Job: J{0,12}
+
+
+Time: 49 | Currently Executing Job: J{3,3}
+
+
+Time: 50 | Currently Executing Job: J{1,10}
+
+
+Time: 52 | Currently Executing Job: J{0,13}
+
+
+Time: 53 | Currently Executing Job: J{2,5}
+
+
+Time: 54 | Currently Executing Job: J{3,2}
+
+J{3,2} Missed its Deadline
+
+Time: 55 | Currently Executing Job: J{1,11}
+
+
+Time: 56 | Currently Executing Job: J{0,14}
+
+
+Time: 57 | Currently Executing Job: J{1,11}
+
+
+Time: 58 | Currently Executing Job: J{3,3}
+
+
+
+Min Response Times for each Task
+Task #0: 1
+Task #1: 2
+Task #2: 4
+Task #3: 24
+
+
+Max Response Times for each Task
+Task #0: 1
+Task #1: 3
+Task #2: 4
+Task #3: 28
+
+
+Avg Response Times for each Task
+Task #0: 1.000000
+Task #1: 2.500000
+Task #2: 4.000000
+Task #3: 25.666666
+
+Number of Decision Points: 57
+
+Number of Preemption Points: 49

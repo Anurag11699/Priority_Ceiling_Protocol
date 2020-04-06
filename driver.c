@@ -27,6 +27,7 @@ int main()
         fscanf(resource_fd,"%d",&(R->total_instances));
         R->remaining_instances=R->total_instances;
         R->resource_number=i;
+        R->priority_ceil_of_resource=-1;
         R->currently_used_by = new_red_black_tree();
         resource_list_object->resource_list_head[i]=R;
 
@@ -61,15 +62,19 @@ int main()
     fscanf(tasks_fd,"%d",&scheduling_algo);
     fclose(tasks_fd);
 
+
+    kernel* kernel_object = (kernel*)malloc(sizeof(kernel));
+    kernel_object->system_priority_ceiling=-1;
+
     //call the scheduler implementing priority inheritance protcol
 
     if(scheduling_algo==0)
     {
-        scheduler_priority_ceiling(prioty_inheritance_task_set,resource_list_object,RM);
+        scheduler_priority_ceiling(kernel_object,prioty_inheritance_task_set,resource_list_object,RM);
     }
     else if(scheduling_algo==1)
     {
-        scheduler_priority_ceiling(prioty_inheritance_task_set,resource_list_object,EDF);
+        scheduler_priority_ceiling(kernel_object,prioty_inheritance_task_set,resource_list_object,EDF);
     }
     
     

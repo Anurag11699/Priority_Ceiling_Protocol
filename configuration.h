@@ -6,5 +6,4 @@
 #define output_file "OUTPUT.txt"
 
 
-
 #endif /*CONFIGURATION_H*/

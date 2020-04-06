@@ -12,6 +12,10 @@ FILE* output_fd;
 #define min(x, y) ((x)<(y)?(x):(y))
 #define RM 0
 #define EDF 1
+#define NOT_IN_SYSTEM 0 //either terminated or not arrived
+#define READY 1
+#define EXECUTING 2
+
 
 //Ready queue related functions
 extern tree_node* new_tree_node(job*);
@@ -39,7 +43,8 @@ extern int hyperperiod(task_set *);
 
 //scheduling functions
 extern job_list* initialize_job_list(task_set *,resource_list *,int); 
-extern void scheduler_priority_ceiling(task_set *,resource_list*,int);
+extern void scheduler_priority_ceiling(kernel*,task_set *,resource_list*,int);
+extern void update_priority_ceiling(kernel*,job_list*, resource_list*);
 extern void print_job_list(job_list*);
 
 

@@ -1,0 +1,14 @@
+4
+0 4 1 4
+0 5 2 5
+0 10 1 10
+0 15 4 15
+0
+
+
+----------------------------------------------
+Task Set File Format
+
+Number of Tasks(int)
+Phase(int) Period(int) Execution Time(int) Deadline(int) {one line per task}
+(last line of input)Scheduling Algo Used: 0 -> RM | 1 -> EDF

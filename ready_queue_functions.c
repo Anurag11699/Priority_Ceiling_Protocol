@@ -312,7 +312,7 @@ void inorder(red_black_tree *t, tree_node *n)
     if(n != t->NIL) 
     {
         inorder(t, n->left);
-        fprintf(output_fd,"%d\t", n->job_object->current_priority);
+        fprintf(output_fd,"J{%d,%d}\t", n->job_object->task_number,n->job_object->job_number);
         fflush(output_fd);
         inorder(t, n->right);
     }
@@ -329,8 +329,8 @@ job* RB_tree_remove_min(red_black_tree * rb_tree_object)
 {
     
     tree_node *min = minimum(rb_tree_object,rb_tree_object->root);
-    
 
+    if(min!=rb_tree_object->NIL)
     rb_delete(rb_tree_object,min);
     return min->job_object;
 }
@@ -394,26 +394,37 @@ Updated priority of job and its respective priority queues
 void update_job_priority(red_black_tree* ready_queue,resource_list* resource_list_object,job* job_object,int new_priority)
 {
     
+    
     //searching for job in all Trees
     tree_node * needed_node_resource_queue[resource_list_object->number_of_resources];
     tree_node *needed_node_ready_queue = rb_tree_search(ready_queue,job_object);
 
-
+    fprintf(output_fd,"Printing Ready Queue\n");
+    inorder(ready_queue,ready_queue->root);
    
 
     for(int i=0;i<resource_list_object->number_of_resources;i++)
     {
+        fprintf(output_fd,"Printing Resorce %d Queue\n",i);
+        //inorder(resource_list_object->resource_list_head[i]->currently_used_by,resource_list_object->resource_list_head[i]->currently_used_by->root);
+        
         needed_node_resource_queue[i] = rb_tree_search(resource_list_object->resource_list_head[i]->currently_used_by, job_object);
     }
+
+    
 
     //deleting jobs from all trees if present 
 
     rb_delete(ready_queue,needed_node_ready_queue);
 
+    
+
     for(int i=0;i<resource_list_object->number_of_resources;i++)
     {
         if(needed_node_resource_queue[i] != resource_list_object->resource_list_head[i]->currently_used_by->NIL)
         {
+            fprintf(output_fd,"Deletion Resource %d\n",i);
+            fflush(output_fd);
             rb_delete(resource_list_object->resource_list_head[i]->currently_used_by,needed_node_resource_queue[i]);
         }
     }
@@ -440,5 +451,6 @@ void rb_delete_job(red_black_tree* rb_tree_object,job* job_object)
 {
     tree_node *needed_node = rb_tree_search(rb_tree_object,job_object);
 
-    rb_delete(rb_tree_object,needed_node);
+    if(needed_node!=rb_tree_object->NIL)
+        rb_delete(rb_tree_object,needed_node);
 }

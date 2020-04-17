@@ -480,9 +480,6 @@ void insert_priority_queue(priority_queue* priority_queue_object,job* job_object
 
     if(priority_queue_object->priority_queue_head->next==NULL)
     {
-        fprintf(output_fd,"HI in insertion 1\n");
-        fflush(output_fd);
-
         priority_queue_new_node->next=NULL;
         priority_queue_object->priority_queue_head->next=priority_queue_new_node;
         priority_queue_object->priority_queue_head->number_of_jobs++;
@@ -546,8 +543,9 @@ int delete_job_priority_queue(priority_queue* priority_queue_object,job* job_obj
 
     if(priority_queue_object->priority_queue_head->next->job_object==job_object)
     {
+        priority_queue_node* temp=priority_queue_object->priority_queue_head->next;
         priority_queue_object->priority_queue_head->next=priority_queue_object->priority_queue_head->next->next;
-
+        free(temp);
         return 1;
     }
 
@@ -569,8 +567,8 @@ int delete_job_priority_queue(priority_queue* priority_queue_object,job* job_obj
 
     if(walker->job_object==job_object)
     {
-        fprintf(output_fd,"REMOVING JOB J{%d,%d}\n",walker->job_object->task_number,walker->job_object->job_number);
-        fflush(output_fd);
+        // fprintf(output_fd,"REMOVING JOB J{%d,%d}\n",walker->job_object->task_number,walker->job_object->job_number);
+        // fflush(output_fd);
 
         walker_prev->next=walker->next;
         free(walker);
@@ -603,8 +601,8 @@ Updated priority of job and its respective priority queues
 */
 void update_job_priority(kernel* kernel_object,resource_list* resource_list_object,job* job_object,int new_priority)
 {
-    fprintf(output_fd,"Job to Inherit-> J{%d,%d}\n",job_object->task_number,job_object->job_number);
-    fflush(output_fd);
+    // fprintf(output_fd,"Job to Inherit-> J{%d,%d}\n",job_object->task_number,job_object->job_number);
+    // fflush(output_fd);
     
     job_object->current_priority=new_priority;
 
@@ -612,8 +610,6 @@ void update_job_priority(kernel* kernel_object,resource_list* resource_list_obje
     delete_job_priority_queue(kernel_object->ready_queue,job_object);
     insert_priority_queue(kernel_object->ready_queue,job_object);
 
-    fprintf(output_fd,"HELLO\n");
-    fflush(output_fd);
 
     for(int i=0;i<resource_list_object->number_of_resources;i++)
     {

@@ -322,7 +322,7 @@ void scheduler_priority_ceiling(kernel* kernel_object,task_set *priority_inherit
     fflush(output_fd);
 
     //creating a ready queue
-    red_black_tree* ready_queue = new_red_black_tree();
+    //red_black_tree* ready_queue = new_red_black_tree();
 
     //getting the list of jobs
     job_list* job_list_object = initialize_job_list(priority_inheritance_task_set, resource_list_object,priority_inheritance_task_set_hyperperiod);

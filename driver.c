@@ -65,6 +65,8 @@ int main()
 
     kernel* kernel_object = (kernel*)malloc(sizeof(kernel));
     kernel_object->system_priority_ceiling=__INT16_MAX__;
+    kernel_object->ready_queue = initialize_priority_queue();
+    kernel_object->currently_executing_job=NULL;
 
     //call the scheduler implementing priority inheritance protcol
 

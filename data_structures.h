@@ -28,19 +28,43 @@ struct job;
 typedef struct job job;
 
 
-struct tree_node;
-typedef struct tree_node tree_node;
+// struct tree_node;
+// typedef struct tree_node tree_node;
 
-struct red_black_tree;
-typedef struct red_black_tree red_black_tree;
+// struct red_black_tree;
+// typedef struct red_black_tree red_black_tree;
 
 struct job_list;
 typedef struct job_list job_list;
+
+struct priority_queue_node
+{
+	job* job_object;
+	struct priority_queue_node *next;
+};
+
+typedef struct priority_queue_node priority_queue_node;
+
+typedef struct priority_queue_dummy_head
+{
+	int number_of_jobs;
+	priority_queue_node *next;
+}priority_queue_dummy_head;
+
+typedef struct priority_queue
+{
+    
+    priority_queue_dummy_head* priority_queue_head;
+    priority_queue_node* priority_queue_tail;
+
+}priority_queue;
 
 
 struct kernel
 {
     int system_priority_ceiling;
+    priority_queue* ready_queue;
+    job* currently_executing_job;
 };
 
 
@@ -55,7 +79,7 @@ struct resource{
     int priority_ceil_of_resource;
 
     //a priority queue of jobs that currently hold this resource. This is needed so that we can make the highest priority job inherit the priority of a job in resource contention scenarios
-    red_black_tree* currently_used_by;
+    priority_queue* currently_used_by;
 };
 
 /*
@@ -140,28 +164,29 @@ struct job_list
     job* *job_list_head;
 };
 
-/*
-ADT for a RB Tree Node
-*/
-struct tree_node
-{
-	job *job_object;
+// /*
+// ADT for a RB Tree Node
+// */
+// struct tree_node
+// {
+// 	job *job_object;
 	
-    struct tree_node *right;
-    struct tree_node *left;
-    struct tree_node *parent;
-    enum COLOR color;
-};
+//     struct tree_node *right;
+//     struct tree_node *left;
+//     struct tree_node *parent;
+//     enum COLOR color;
+// };
 
 
-/*
-ADT for a Red Black Tree
-*/
-struct red_black_tree 
-{
-  tree_node *root;
-  tree_node *NIL;
-};
+// /*
+// ADT for a Red Black Tree
+// */
+// struct red_black_tree 
+// {
+//   tree_node *root;
+//   tree_node *NIL;
+// };
+
 
 
 

@@ -28,7 +28,7 @@ int main()
         R->remaining_instances=R->total_instances;
         R->resource_number=i;
         R->priority_ceil_of_resource=__INT16_MAX__;
-        R->currently_used_by = new_red_black_tree();
+        R->currently_used_by = initialize_priority_queue();
         resource_list_object->resource_list_head[i]=R;
 
         //fprintf(stderr,"%d\n",R->total_instances);

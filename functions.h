@@ -30,7 +30,7 @@ FILE* output_fd;
 // extern void rb_delete(red_black_tree *, tree_node *);
 // extern void rb_delete_job(red_black_tree*,job*);
 // extern void inorder(red_black_tree *, tree_node *);
-// extern void update_job_priority(red_black_tree*,resource_list*,job*,int);
+extern void update_job_priority(kernel*,resource_list*,job*,int);
 // extern tree_node* rb_tree_search(red_black_tree*,job*);
 // extern job* RB_tree_remove_min(red_black_tree*);
 // extern job* RB_tree_get_min(red_black_tree*);
@@ -41,6 +41,7 @@ extern job* get_max_priority_queue(priority_queue*);
 extern job* remove_max_priority_queue(priority_queue*);
 extern int delete_job_priority_queue(priority_queue*,job*);
 extern int is_priority_queue_empty(priority_queue*);
+extern void print_priority_queue(priority_queue*);
 
 
 //functions needed to calculate hyperperiod

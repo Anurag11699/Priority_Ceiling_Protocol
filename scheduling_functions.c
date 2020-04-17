@@ -211,17 +211,20 @@ job_list* initialize_job_list(task_set *task_set_object,resource_list *resource_
 /*
 PreConditions
 Inputs: {pointer to kernel object, pointer to resource list object}
-task_set_object!=NULL
+kernel_object!=NULL
 resource_list_object!=NULL
-hyperperiod>=0
 
-Purpose of the Function: This function initializes all jobs for each task in a given hyperperiod for a task set. It also assigns resources to each job at random.
+
+Purpose of the Function: This function is used to update the priority ceil of the system and each resource. We check if remaining free resource instances of a resource is greater than what is needed by any ready or executing job. If not, the priority ceil of that resource is the max (minimum value) of the priorities of all the jobs that need that resource. The priority ceil of the system in the max (minimum value) of the priority ceils of all the resources.
 
 PostConditions
-Return Value: Pointer to the list of jobs that need to be executed within a given hyperperiod
+Updated priority ceilings
 */
 void update_priority_ceiling(kernel* kernel_object, resource_list* resource_list_object)
 {
+    //check PreConditions
+    assert(kernel_object!=NULL && "Pointer to kernel object cannot be null");
+    assert(resource_list_object!=NULL && "Pointer to resourece list cannot be null");
 
     int need_to_ceil[resource_list_object->number_of_resources];
     int max_job_priority_needing_resource[resource_list_object->number_of_resources];
@@ -239,38 +242,37 @@ void update_priority_ceiling(kernel* kernel_object, resource_list* resource_list
 
     //all jobs in the ready queue
     while(walker!=NULL)
-    //for(i=0;i<job_list_object->number_of_jobs;i++)
     {
-        //job* job_object = job_list_object->job_list_head[i];
 
         job* job_object = walker->job_object;
 
-        //if(job_object->state==READY || job_object->state==EXECUTING)
-        //{
-            
-            for(j=0;j<job_object->resources_needed->number_of_resources;j++)
+        
+        for(j=0;j<job_object->resources_needed->number_of_resources;j++)
+        {
+            resource_usage* resource_usage_object = job_object->resources_needed->list_head[j];
+
+            if(resource_usage_object->is_usage_over==0 &&resource_usage_object->is_currently_holding==0)
             {
-                resource_usage* resource_usage_object = job_object->resources_needed->list_head[j];
+                //fprintf(output_fd,"Instances needed by Job: %d| Remaining Instances: %d\n",resource_usage_object->instances_needed,resource_usage_object->resource_name->remaining_instances);
 
-                if(resource_usage_object->is_usage_over==0 &&resource_usage_object->is_currently_holding==0)
+                //check if this jobs need can be satisfied. If not, there is a need to ceil this resource
+                if(resource_usage_object->resource_name->remaining_instances < resource_usage_object->instances_needed)
                 {
-                    //fprintf(output_fd,"Instances needed by Job: %d| Remaining Instances: %d\n",resource_usage_object->instances_needed,resource_usage_object->resource_name->remaining_instances);
-                    if(resource_usage_object->resource_name->remaining_instances < resource_usage_object->instances_needed)
-                    {
-                        need_to_ceil[resource_usage_object->resource_name->resource_number]=1;
-                        
-                    }
-
-                    max_job_priority_needing_resource[resource_usage_object->resource_name->resource_number] = min(max_job_priority_needing_resource[resource_usage_object->resource_name->resource_number], job_object->assigned_priority);
+                    need_to_ceil[resource_usage_object->resource_name->resource_number]=1;
+                    
                 }
-                
+
+                max_job_priority_needing_resource[resource_usage_object->resource_name->resource_number] = min(max_job_priority_needing_resource[resource_usage_object->resource_name->resource_number], job_object->assigned_priority);
             }
             
-        //}
+        }
+            
+        
         walker=walker->next;
     }
 
     job* job_object;
+
     //the currently executing job
     if(kernel_object->currently_executing_job!=NULL)
     {
@@ -285,9 +287,12 @@ void update_priority_ceiling(kernel* kernel_object, resource_list* resource_list
     {
         resource_usage* resource_usage_object = job_object->resources_needed->list_head[j];
 
+        
         if(resource_usage_object->is_usage_over==0 &&resource_usage_object->is_currently_holding==0)
         {
             //fprintf(output_fd,"Instances needed by Job: %d| Remaining Instances: %d\n",resource_usage_object->instances_needed,resource_usage_object->resource_name->remaining_instances);
+
+            //check if this jobs need can be satisfied. If not, there is a need to ceil this resource
             if(resource_usage_object->resource_name->remaining_instances < resource_usage_object->instances_needed)
             {
                 need_to_ceil[resource_usage_object->resource_name->resource_number]=1;
@@ -301,7 +306,9 @@ void update_priority_ceiling(kernel* kernel_object, resource_list* resource_list
 
     update_priority:
     for(i=0;i<resource_list_object->number_of_resources;i++)
-    {
+    {   
+
+        //ceil the resource if it cannot satisfy the need of some job
         if(need_to_ceil[i]==1)
         {
             resource_list_object->resource_list_head[i]->priority_ceil_of_resource = max_job_priority_needing_resource[i];
@@ -311,12 +318,13 @@ void update_priority_ceiling(kernel* kernel_object, resource_list* resource_list
             resource_list_object->resource_list_head[i]->priority_ceil_of_resource=__INT16_MAX__;
         }
         
-
+        //system priority ceil
         kernel_object->system_priority_ceiling = min(kernel_object->system_priority_ceiling,resource_list_object->resource_list_head[i]->priority_ceil_of_resource);
     }
 
 }
 
+/*auxillary function used to print the priority ceilings of each resource and the system priority ceil*/
 void print_priority_ceilings(kernel* kernel_object,resource_list* resource_list_object)
 {   
     int i;
@@ -340,7 +348,10 @@ void print_priority_ceilings(kernel* kernel_object,resource_list* resource_list_
 
 /*
 PreConditions
-Inputs: {pointer to task set object, pointer to the resource list object, scheduling algorithm that needs to be used}
+Inputs: {pointer to kernel object, pointer to task set object, pointer to the resource list object, scheduling algorithm that needs to be used}
+task_set_object!=NULL
+resource_list_object!=NULL
+scheduling algo either EDF or RM
 
 Purpose of the Function: Schedules the task set using the scheduling algorithm and deals with resources using priority inheritance protocol
 
@@ -363,6 +374,15 @@ Scheduled task set
 */
 void scheduler_priority_ceiling(kernel* kernel_object,task_set *priority_ceiling_task_set, resource_list* resource_list_object, int scheduling_algo)
 {
+
+    //check PreConditions
+    assert(kernel_object!=NULL && "Pointer to kernel object cannot be null");
+    assert(priority_ceiling_task_set!=NULL && "Pointer to task set cannot be null");
+    assert(resource_list_object!=NULL && "Pointer to resourece list cannot be null");
+
+    assert((scheduling_algo==RM || scheduling_algo==EDF) && "Scheduling algo must be either RM or EDF");
+
+    
     //initialzing variables to calculate number of decision points and number of preemptions
     int number_of_decision_points=0;
     int number_of_preemptions=0;
